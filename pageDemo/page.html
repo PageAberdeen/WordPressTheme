@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分页思维</title>
+    <style>
+        #js-menu a{
+            border: 1px solid #ddd;
+            padding: 0 10px;
+            margin: 0 2px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        #js-menu a:hover,#js-menu a.active{
+            color: #fff;
+            border-color:#e4393c;
+            background-color:#e4393c;
+        }
+    </style>
+</head>
+<body>
+    <div id="js-menu">
+
+    </div>
+<!--<script type="text/javascript" src="autupage.js"></script>-->
+    <script src="oopPage.js"></script>
+    <script>
+            function xhr(page) {
+                var xhr = null;
+                if (window.XMLHttpRequest) {  //其它浏览器
+                    xhr = new XMLHttpRequest();
+                } else {		//老IE
+                    xhr = new ActiveXObject('Microsoft.XMLHTTP');
+                }
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        var data = xhr.responseText;
+                        var str = eval(data);
+                        console.log(str);
+                        var onePage = new autoPage(str[0].page, str[0].total);
+                        onePage.intr('js-menu');
+                    }
+                };
+
+                xhr.open('GET', 'page.php?page=' + page + '', true);
+                xhr.send(null);
+            }
+        xhr(1);
+    </script>
+</body>
+</html>
